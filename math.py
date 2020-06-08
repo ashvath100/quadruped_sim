@@ -7,8 +7,8 @@ CoxaLength = 30#coxa length
 FemurLength = 60#femur length
 TibiaLength = 140#tibia length
 
-pos = np.array([0,0,0])
-rot = np.array([0,0,0])
+pos = np.array([10,0,0])
+rot = np.array([10,0,0])
 
 BodyCenterOffset = BodySide/2
 
@@ -17,13 +17,18 @@ bodytoFR = np.array([ BodyCenterOffset, BodyCenterOffset ])
 bodytoFL = np.array([ -BodyCenterOffset, BodyCenterOffset ])
 bodytoBR = np.array([ BodyCenterOffset, -BodyCenterOffset ])
 bodytoBL = np.array([-BodyCenterOffset, -BodyCenterOffset ])
+# print(bodytoFR)
+# print(bodytoBR)
+# print(bodytoBL)
+# print(bodytoFL)
+
 
 
 initialpos = np.matrix([[np.cos(45/180*np.pi)*(CoxaLength + FemurLength), np.sin(45/180*np.pi)*(CoxaLength + FemurLength),      TibiaLength],
                         [np.cos(45/180*np.pi)*(CoxaLength + FemurLength), np.sin(-45/180*np.pi)*(CoxaLength + FemurLength),     TibiaLength],
                         [-np.cos(45/180*np.pi)*(CoxaLength + FemurLength), np.sin(-45/180*np.pi)*(CoxaLength + FemurLength),     TibiaLength],
                         [-np.cos(45/180*np.pi)*(CoxaLength + FemurLength), np.sin(45/180*np.pi)*(CoxaLength + FemurLength),     TibiaLength]]) 
-
+#print(initialpos)
 totaldist = np.matrix([[initialpos[0,0] + bodytoFR[0] + pos[0], initialpos[0,1] + bodytoFR[1] + pos[1]],
                 [initialpos[1,0] + bodytoBR[0] + pos[0], initialpos[1,1] + bodytoBR[1] + pos[1]],
                 [initialpos[2,0] + bodytoBL[0] + pos[0], initialpos[2,1] + bodytoBL[1] + pos[1]],
@@ -43,13 +48,13 @@ AngleBodyCenter = np.matrix([[np.arctan2(totaldist[0,1], totaldist[0,0])],
                 [np.arctan2(totaldist[2,1], totaldist[2,0])],
                 [np.arctan2(totaldist[3,1], totaldist[3,0])]])
 
-#print(AngleBodyCenter)
+
 
 rolly = np.array([[np.tan(rot[1] * np.pi/180) * totaldist[0,0]],
                 [np.tan(rot[1] * np.pi/180) * totaldist[1,0]],
                 [np.tan(rot[1] * np.pi/180) * totaldist[2,0]],
                 [np.tan(rot[1] * np.pi/180) * totaldist[3,0]]])
-#print(rolly)
+#print(AngleBodyCenter)
 
 pitchy = np.array([[np.tan(rot[0] * np.pi/180) * totaldist[0,1]],
                 [np.tan(rot[0] * np.pi/180) * totaldist[1,1]],
@@ -63,7 +68,7 @@ bodyik = np.array([[np.cos(AngleBodyCenter[0,0] + (rot[2] * np.pi/180)) * distBo
         [np.cos(AngleBodyCenter[2,0] + (rot[2] * np.pi/180)) * distBodyCenterFeet[2] - totaldist[2,0],     np.sin(AngleBodyCenter[2,0] + (rot[2] * np.pi/180)) * distBodyCenterFeet[2] - totaldist[2,1],    rolly[2]+pitchy[2]],
         [np.cos(AngleBodyCenter[3,0] + (rot[2] * np.pi/180)) * distBodyCenterFeet[3] - totaldist[3,0],     np.sin(AngleBodyCenter[3,0] + (rot[2] * np.pi/180)) * distBodyCenterFeet[3] - totaldist[3,1],    rolly[3]+pitchy[3]]]) 
 
-#print(initialpos[0,0])
+#print(bodyik)
 
 newpos = np.array([[(pos[0] + initialpos[0,0] + bodyik[0][0]), (pos[1] + initialpos[0,1] + bodyik[0][1]), (pos[2] + initialpos[0,2] + bodyik[0][2])],
                 [(pos[0] + initialpos[1,0] + bodyik[1][0]), (pos[1] + initialpos[1,1] + bodyik[1][1]),  (pos[2] + initialpos[1,2] + bodyik[1][2])],
@@ -114,10 +119,4 @@ ikcoxa = np.array([[(math.atan2(newpos[0][1],newpos[0][0]) * 180/np.pi)],
                         [math.atan2(newpos[2][1],newpos[2][0]) * 180/np.pi],
                         [math.atan2(newpos[3][1],newpos[3][0]) * 180/np.pi]]) 
 
-# print(iktibia)
-# print(ikfemur)
-print(ikcoxa)
-FR_angles = np.array([(ikcoxa[0]-45)*(np.pi/180),ikfemur[0]*(np.pi/180),iktibia[0]*(np.pi/180)])
-print(FR_angles)
-BL_angles = np.array([(ikcoxa[1]+45)*(np.pi/180),ikfemur[1]*(np.pi/180),iktibia[1]*(np.pi/180)])
-print(BL_angles)
+print(ikcoxa , ikfemur,iktibia)

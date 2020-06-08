@@ -21,7 +21,7 @@
     </collision>
     <inertial>
       <origin xyz="0 0 0"/>
-      <mass value="20.843" />
+      <mass value="200.843" />
       <inertia ixx="0.002480" ixy="9.381E-19" ixz="-3.172E-18"
                               iyy="1.060E-02" iyz="1002.754E-09"
                                               izz="1.243E-02" />
@@ -75,7 +75,7 @@
         <sphere radius="0.2"/>
       </geometry>
     </collision>
-
+   <mass value="200.843" />
     <visual>
       <geometry>
         <sphere radius="0.2"/>
@@ -160,7 +160,7 @@
         <sphere radius="0.2"/>
       </geometry>
     </collision>
- 
+  <mass value="200.843" />
     <visual>
       <geometry>
         <sphere radius="0.2"/>
@@ -248,7 +248,7 @@
         <sphere radius="0.2"/>
       </geometry>
     </collision>
-  
+   <mass value="200.843" />
     <visual>
       <geometry>
         <sphere radius="0.2"/>
@@ -333,7 +333,7 @@
         <sphere radius="0.2"/>
       </geometry>
     </collision>
-  
+   <mass value="200.843" />
     <visual>
       <geometry>
         <sphere radius="0.2"/>

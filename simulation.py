@@ -1,5 +1,4 @@
 
-
 import pybullet as p
 import numpy as np
 import time
@@ -43,9 +42,12 @@ p.setRealTimeSimulation(1)
     
 while(True):
     lastTime = time.time()
-    POS , ROT = pybulletDebug.cam_and_robotstates(boxId)  
-    FR_angles ,  BL_angles, BR_angles, FL_angles = robotKinematics.solve(POS , ROT)
-        
+    POS , ROT , SPEED = pybulletDebug.cam_and_robotstates(boxId)  
+    FR_angles ,  BL_angles, BR_angles, FL_angles = robotKinematics.doik(POS , ROT ,SPEED)
+    FR_angles[0] = FR_angles[0]- 0.785398
+    BL_angles[0] = BL_angles[0]+ 0.785398
+    BR_angles[0] = BR_angles[0]+  2.356
+    FL_angles[0] = FL_angles[0]- 2.356
 
     for i in range(0, footFR_index):
         p.setJointMotorControl2(boxId, i, p.POSITION_CONTROL, FR_angles[i - footFR_index])
